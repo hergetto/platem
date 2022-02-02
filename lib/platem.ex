@@ -18,7 +18,6 @@ defmodule Platem do
     DynamicSupervisor.start_child(__MODULE__, spec)
   end
 
-
   @doc """
   Populates a template with the given values.
 
@@ -30,6 +29,7 @@ defmodule Platem do
     case start_populator(template, values) do
       {:ok, pid} ->
         pid |> GenServer.call(:populate)
+
       {:error, reason} ->
         raise reason
     end

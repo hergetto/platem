@@ -21,10 +21,12 @@ defmodule Platem.Populator do
       %Platem.Field{name: "name", default: "default"}
   """
   def find_field(name, []), do: name
+
   def find_field(name, [%Field{name: field_name} = field | tail]) do
     cond do
       field_name == name ->
-       field
+        field
+
       true ->
         find_field(name, tail)
     end
@@ -38,15 +40,24 @@ defmodule Platem.Populator do
       %Platem.Template{template: "value", fields: [%Platem.Field{name: "name", default: "name"}]}
   """
   def populate(%Template{} = template, []), do: template
-  def populate(%Template{template: template_string, fields: fields, clause: {open, close}} = template, [%Value{name: name, value: value} | tail]) do
-     replace = case value do
-      nil ->
-        %Field{default: default} = find_field(name, fields)
-        default
-      _ ->
-        value
-    end
-    template |> Map.put(:template, String.replace(template_string, "#{open}#{name}#{close}", replace)) |> populate(tail)
+
+  def populate(
+        %Template{template: template_string, fields: fields, clause: {open, close}} = template,
+        [%Value{name: name, value: value} | tail]
+      ) do
+    replace =
+      case value do
+        nil ->
+          %Field{default: default} = find_field(name, fields)
+          default
+
+        _ ->
+          value
+      end
+
+    template
+    |> Map.put(:template, String.replace(template_string, "#{open}#{name}#{close}", replace))
+    |> populate(tail)
   end
 
   @impl true

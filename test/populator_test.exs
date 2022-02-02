@@ -2,6 +2,7 @@ defmodule PopulatorTest do
   use ExUnit.Case
 
   def default_template, do: template({"{{", "}}"})
+
   def template(clause) do
     %Platem.Template{
       template: "{{title}}<%=title%>",
@@ -14,13 +15,13 @@ defmodule PopulatorTest do
 
   def values do
     [
-      %Platem.Value{name: "title", value: "Platem Example"},
+      %Platem.Value{name: "title", value: "Platem Example"}
     ]
   end
 
   def empty_values do
     [
-      %Platem.Value{name: "title"},
+      %Platem.Value{name: "title"}
     ]
   end
 
