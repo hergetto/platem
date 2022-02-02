@@ -7,7 +7,12 @@ defmodule Platem.MixProject do
       version: "0.1.0",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      docs: [
+        main: "readme",
+        source_ref: "master",
+        extras: ["README.md"]
+      ]
     ]
   end
 
