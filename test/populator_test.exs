@@ -31,7 +31,7 @@ defmodule PopulatorTest do
 
     {:ok, pid} = Platem.Populator.start_link({template, values})
     ret = GenServer.call(pid, :populate)
-    assert ret.template == "Platem Example<%=title%>"
+    assert ret.html == "Platem Example<%=title%>"
   end
 
   test "use default values" do
@@ -40,7 +40,7 @@ defmodule PopulatorTest do
 
     {:ok, pid} = Platem.Populator.start_link({template, values})
     ret = GenServer.call(pid, :populate)
-    assert ret.template == "Platem Example!<%=title%>"
+    assert ret.html == "Platem Example!<%=title%>"
   end
 
   test "populate a template with other clause" do
@@ -49,6 +49,6 @@ defmodule PopulatorTest do
 
     {:ok, pid} = Platem.Populator.start_link({template, values})
     ret = GenServer.call(pid, :populate)
-    assert ret.template == "{{title}}Platem Example"
+    assert ret.html == "{{title}}Platem Example"
   end
 end

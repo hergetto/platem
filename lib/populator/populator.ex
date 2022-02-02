@@ -7,6 +7,7 @@ defmodule Platem.Populator do
   alias Platem.Template
   alias Platem.Value
   alias Platem.Field
+  alias Platem.Page
 
   @doc false
   def start_link(state) do
@@ -37,9 +38,9 @@ defmodule Platem.Populator do
 
   # Example
       iex> Platem.Populator.populate(%Platem.Template{template: "{{name}}", fields: [%Platem.Field{name: "name", default: "default"}], clause: {"{{", "}}"}}, [%Platem.Value{name: "name", value: "value"}])
-      %Platem.Template{template: "value", fields: [%Platem.Field{name: "name", default: "name"}]}
+      %Platem.Page{html: "value", published: false}
   """
-  def populate(%Template{} = template, []), do: template
+  def populate(%Template{} = template, []), do: %Page{html: template.template, published: false}
 
   def populate(
         %Template{template: template_string, fields: fields, clause: {open, close}} = template,
