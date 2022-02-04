@@ -7,7 +7,7 @@ defmodule Platem.Publisher do
   Saves a page to the file.
   """
   def save(page) do
-    path = Path.join([Map.get(page, :folder), '#{Map.get(page, :name)}.html.heex'])
+    path = Path.join([Map.get(page, :folder), '#{Map.get(page, :name)}.html'])
     File.write(path, page.html)
 
     page
@@ -28,6 +28,8 @@ defmodule Platem.Publisher do
         pid
     end
     |> GenServer.cast({:add_page, page})
+
+    page |> Map.put(:published, true)
   end
 
   @doc """
