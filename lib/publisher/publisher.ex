@@ -1,4 +1,11 @@
 defmodule Platem.Publisher do
+  @moduledoc """
+  This module is responsible for managing pages.
+  """
+
+  @doc """
+  Saves a page to the file.
+  """
   def save(page) do
     path = Path.join([Map.get(page, :folder), '#{Map.get(page, :name)}.html.heex'])
     File.write(path, page.html)
@@ -8,6 +15,9 @@ defmodule Platem.Publisher do
     |> Map.put(:path, path)
   end
 
+  @doc """
+  Adds a page to the manager process.
+  """
   def add_to_manager(page) do
     case Process.whereis(Platem.PageManager) do
       nil ->
@@ -20,6 +30,9 @@ defmodule Platem.Publisher do
     |> GenServer.cast({:add_page, page})
   end
 
+  @doc """
+  Retrieves all the pages from the manager process.
+  """
   def get_pages do
     case Process.whereis(Platem.PageManager) do
       nil ->

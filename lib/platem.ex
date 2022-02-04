@@ -43,7 +43,9 @@ defmodule Platem do
     end
   end
 
-  @doc false
+  @doc """
+  This function saves a page to the filesystem, and then adds it to the manager.
+  """
   def publish(page, folder, name) do
     page
     |> Map.put(:folder, folder)
@@ -52,7 +54,9 @@ defmodule Platem do
     |> Publisher.add_to_manager()
   end
 
-  @doc false
+  @doc """
+  This function retrieves all of the pages from the manager.
+  """
   def get_pages() do
     Publisher.get_pages()
   end

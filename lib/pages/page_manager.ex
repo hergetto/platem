@@ -1,4 +1,8 @@
 defmodule Platem.PageManager do
+  @moduledoc """
+  This module is responsible for managing the pages of the application.
+  """
+
   use GenServer
 
   def start_link(state) do
