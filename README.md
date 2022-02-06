@@ -10,7 +10,7 @@ by adding `platem` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:platem, "~> 0.1.0"}
+    {:platem, "~> 0.2.0"}
   ]
 end
 ```
