@@ -6,10 +6,18 @@ defmodule Platem do
 
   use DynamicSupervisor
   alias Platem.Populator
+  alias Platem.PageManager
+  alias Platem.Publisher
 
   @doc false
   def start_link(_args) do
     DynamicSupervisor.start_link(__MODULE__, [], name: __MODULE__)
+  end
+
+  @doc false
+  def start_manager() do
+    spec = {PageManager, []}
+    DynamicSupervisor.start_child(__MODULE__, spec)
   end
 
   @doc false
@@ -33,6 +41,24 @@ defmodule Platem do
       {:error, reason} ->
         raise reason
     end
+  end
+
+  @doc """
+  This function saves a page to the filesystem, and then adds it to the manager.
+  """
+  def publish(page, folder, name) do
+    page
+    |> Map.put(:folder, folder)
+    |> Map.put(:name, name)
+    |> Publisher.save()
+    |> Publisher.add_to_manager()
+  end
+
+  @doc """
+  This function retrieves all of the pages from the manager.
+  """
+  def get_pages() do
+    Publisher.get_pages()
   end
 
   @impl true
